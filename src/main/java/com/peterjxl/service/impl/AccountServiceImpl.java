@@ -2,7 +2,6 @@ package com.peterjxl.service.impl;
 
 import com.peterjxl.dao.IAccountDao;
 import com.peterjxl.dao.impl.AccountDaoImpl;
-import com.peterjxl.factory.BeanFactory;
 import com.peterjxl.service.IAccountService;
 
 /**
@@ -10,11 +9,21 @@ import com.peterjxl.service.IAccountService;
  */
 public class AccountServiceImpl implements IAccountService {
 
-//    private IAccountDao accountDao = new AccountDaoImpl();
+    private IAccountDao accountDao = new AccountDaoImpl();
 
-    private IAccountDao accountDao = (IAccountDao) BeanFactory.getBean("accountDao");
+    public AccountServiceImpl(String name) {
+        System.out.println("对象创建了");
+    }
     @Override
     public void saveAccount() {
         accountDao.saveAccount();
+    }
+
+    public void init() {
+        System.out.println("对象初始化了");
+    }
+
+    public void destroy() {
+        System.out.println("对象销毁了");
     }
 }
