@@ -3,16 +3,16 @@ package com.peterjxl.service.impl;
 import com.peterjxl.dao.IAccountDao;
 import com.peterjxl.domain.Account;
 import com.peterjxl.service.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
+    @Autowired
     private IAccountDao accountDao;
-
-    public void setAccountDao(IAccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
 
     @Override
     public List<Account> findAllAccount() {

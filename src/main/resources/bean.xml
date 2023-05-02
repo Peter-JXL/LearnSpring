@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:component-scan base-package="com.peterjxl"/>
     <!-- 配置数据源 -->
     <bean id = "dataSource" class = "com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
@@ -15,15 +17,5 @@
     <!-- 配置QueryRunner -->
     <bean id = "runner" class = "org.apache.commons.dbutils.QueryRunner" scope = "prototype">
         <constructor-arg name = "ds" ref = "dataSource"/>
-    </bean>
-
-    <!-- 配置Dao对象 -->
-    <bean id = "accountDao" class = "com.peterjxl.dao.impl.AccountDaoImpl">
-        <property name = "runner" ref = "runner"/>
-    </bean>
-
-    <!-- 配置service -->
-    <bean id = "accountService" class = "com.peterjxl.service.impl.AccountServiceImpl">
-        <property name = "accountDao" ref = "accountDao"/>
     </bean>
 </beans>
