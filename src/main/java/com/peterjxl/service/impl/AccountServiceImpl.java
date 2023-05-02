@@ -1,27 +1,41 @@
 package com.peterjxl.service.impl;
 
-
 import com.peterjxl.dao.IAccountDao;
+import com.peterjxl.domain.Account;
 import com.peterjxl.service.IAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import java.util.List;
 
-/**
- * 账户的业务层实现类
- */
-@Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
-//    @Autowired
-//    @Qualifier("accountDao3")
-    @Resource(name = "accountDao3")
-    private IAccountDao accountDao2;
+    private IAccountDao accountDao;
+
+    public void setAccountDao(IAccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
     @Override
-    public void saveAccount() {
-        accountDao2.saveAccount();
+    public List<Account> findAllAccount() {
+        return accountDao.findAllAccount();
+    }
+
+    @Override
+    public Account findAccountById(Integer accountId) {
+        return accountDao.findAccountById(accountId);
+    }
+
+    @Override
+    public void saveAccount(Account account) {
+        accountDao.saveAccount(account);
+    }
+
+    @Override
+    public void updateAccount(Account account) {
+        accountDao.updateAccount(account);
+    }
+
+    @Override
+    public void deleteAccount(Integer accountId) {
+        accountDao.deleteAccount(accountId);
     }
 }
