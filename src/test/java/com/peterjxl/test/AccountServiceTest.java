@@ -1,18 +1,19 @@
 package com.peterjxl.test;
 
+import com.peterjxl.config.JdbcConfig;
+import com.peterjxl.config.SpringConfiguration;
 import com.peterjxl.domain.Account;
 import com.peterjxl.service.IAccountService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import java.util.List;
 
 public class AccountServiceTest {
 
     @Test
     public void testFindAll() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         IAccountService as = ac.getBean("accountService", IAccountService.class);
         List<Account> allAccount = as.findAllAccount();
         for (Account account : allAccount) {
@@ -22,7 +23,7 @@ public class AccountServiceTest {
 
     @Test
     public void testFindOne() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         IAccountService as = ac.getBean("accountService", IAccountService.class);
         Account account = as.findAccountById(1);
         System.out.println(account);
@@ -30,7 +31,7 @@ public class AccountServiceTest {
 
     @Test
     public void testSave() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         IAccountService as = ac.getBean("accountService", IAccountService.class);
         Account account = new Account();
         account.setName("test");
@@ -40,17 +41,17 @@ public class AccountServiceTest {
 
     @Test
     public void testUpdate() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         IAccountService as = ac.getBean("accountService", IAccountService.class);
-        Account account = as.findAccountById(4);
+        Account account = as.findAccountById(16);
         account.setMoney(23456f);
         as.updateAccount(account);
     }
 
     @Test
     public void testDelete() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
+        ApplicationContext ac = new AnnotationConfigApplicationContext(SpringConfiguration.class);
         IAccountService as = ac.getBean("accountService", IAccountService.class);
-        as.deleteAccount(4);
+        as.deleteAccount(16);
     }
 }
