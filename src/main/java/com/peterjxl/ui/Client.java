@@ -1,5 +1,6 @@
 package com.peterjxl.ui;
 
+import com.peterjxl.dao.IAccountDao;
 import com.peterjxl.service.IAccountService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -12,11 +13,5 @@ public class Client {
         ApplicationContext ac = new ClassPathXmlApplicationContext("bean.xml");
         IAccountService as = (IAccountService)ac.getBean("accountService");
         as.saveAccount();
-
-        IAccountService as2 = (IAccountService)ac.getBean("accountService2");
-        as2.saveAccount();
-
-        IAccountService as3 = (IAccountService)ac.getBean("accountService3");
-        as3.saveAccount();
     }
 }

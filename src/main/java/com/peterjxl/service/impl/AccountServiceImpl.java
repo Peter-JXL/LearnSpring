@@ -1,28 +1,27 @@
 package com.peterjxl.service.impl;
 
 
+import com.peterjxl.dao.IAccountDao;
 import com.peterjxl.service.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import javax.annotation.Resource;
 
 /**
  * 账户的业务层实现类
  */
+@Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
-
-    private String name;
-    private Integer age;
-    private Date birthday;
-
-    public AccountServiceImpl(String name, Integer age, Date birthday) {
-        this.name = name;
-        this.age = age;
-        this.birthday = birthday;
-    }
+//    @Autowired
+//    @Qualifier("accountDao3")
+    @Resource(name = "accountDao3")
+    private IAccountDao accountDao2;
 
     @Override
     public void saveAccount() {
-        System.out.println("service中的saveAccount方法执行了" + name + "," + age + "," + birthday);
+        accountDao2.saveAccount();
     }
 }
