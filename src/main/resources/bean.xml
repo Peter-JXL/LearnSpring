@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 配置Spring创建容器时要扫描的包 -->
-    <context:component-scan base-package="com.peterjxl"/>
+    <!-- 配置账户的持久层实现类 -->
+    <bean id="accountDao" class="com.peterjxl.dao.impl.AccountDaoImpl">
+        <!-- 注入JdbcTemplate -->
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 
-    <!-- 配置Spring开启注解AOP的支持 -->
-    <aop:aspectj-autoproxy/>
+    <!-- 配置JdBCTemplate-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <!-- 注入数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!-- 注入数据库驱动 -->
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <!-- 注入数据库连接字符串 -->
+        <property name="url" value="jdbc:mysql://localhost:3306/learnSpring"/>
+        <!-- 注入数据库用户名 -->
+        <property name="username" value="learnSpringUser"/>
+        <!-- 注入数据库密码 -->
+        <property name="password" value="learnSpringPassword"/>
+    </bean>
 </beans>
