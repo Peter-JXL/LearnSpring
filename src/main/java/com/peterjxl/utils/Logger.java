@@ -1,12 +1,19 @@
 package com.peterjxl.utils;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 /**
  * 用于记录日志的工具类，它里面提供了公共的代码
  */
+
+@Component("logger")
+@Aspect //表示当前类是一个切面类
 public class Logger {
 
+    @Pointcut("execution(* com.peterjxl.service.impl.*.*(..))")
+    private void pt1() {}
     /**
      * 用于打印日志，计划让其在切入点方法执行之前执行（切入点方法就是业务层方法）
      */
@@ -17,6 +24,7 @@ public class Logger {
     /**
      * 前置通知
      */
+    //@Before("pt1()")
     public void beforePrintLog() {
         System.out.println("前置通知 Logger类中的beforePrintLog方法开始记录日志了。。。");
     }
@@ -24,6 +32,7 @@ public class Logger {
     /**
      * 后置通知
      */
+    //@AfterReturning("pt1()")
     public void afterReturningPrintLog() {
         System.out.println("后置通知 Logger类中的afterReturningPrintLog方法开始记录日志了。。。");
     }
@@ -31,6 +40,7 @@ public class Logger {
     /**
      * 异常通知
      */
+    //@AfterThrowing("pt1()")
     public void afterThrowingPrintLog() {
         System.out.println("异常通知 Logger类中的afterThrowingPrintLog方法开始记录日志了。。。");
     }
@@ -38,6 +48,7 @@ public class Logger {
     /**
      * 最终通知
      */
+    //@After("pt1()")
     public void afterPrintLog() {
         System.out.println("最终通知 Logger类中的afterPrintLog方法开始记录日志了。。。");
     }
@@ -45,6 +56,8 @@ public class Logger {
     /**
      * 环绕通知
      */
+
+    @Around("pt1()")
     public Object aroundPrintLog(ProceedingJoinPoint pjp){
         Object rtValue = null;
         try{
