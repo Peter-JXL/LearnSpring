@@ -3,14 +3,18 @@ package com.peterjxl.service.impl;
 import com.peterjxl.dao.IAccountDao;
 import com.peterjxl.domain.Account;
 import com.peterjxl.service.IAccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+
+@Service("accountService")
+@Transactional // 事务注解
 public class AccountServiceImpl implements IAccountService {
 
+    @Autowired
     private IAccountDao accountDao;
 
-    public void setAccountDao(IAccountDao accountDao) {
-        this.accountDao = accountDao;
-    }
     @Override
     public Account findAccountById(Integer accountId) {
         return accountDao.findAccountById(accountId);
@@ -30,7 +34,7 @@ public class AccountServiceImpl implements IAccountService {
         // 2.5 更新转出账户
         accountDao.updateAccount(source);
 
-//        int i = 1/0;
+        int i = 1/0;
         // 2.6 更新转入账户
         accountDao.updateAccount(target);
     }
