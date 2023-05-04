@@ -2,6 +2,9 @@ package com.peterjxl.domain;
 
 import java.io.Serializable;
 
+/**
+ * 账户的实体类
+ */
 public class Account implements Serializable {
 
     private Integer id;
