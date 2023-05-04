@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!-- 配置账户的持久层实现类 -->
     <bean id="accountDao" class="com.peterjxl.dao.impl.AccountDaoImpl">
-        <!-- 注入JdbcTemplate -->
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="accountService" class="com.peterjxl.service.impl.AccountServiceImpl">
-        <!-- 注入AccountDao -->
         <property name="accountDao" ref="accountDao"/>
     </bean>
 
 
-    <!-- 配置数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <!-- 注入数据库驱动 -->
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <!-- 注入数据库连接字符串 -->
         <property name="url" value="jdbc:mysql://localhost:3306/learnSpring"/>
-        <!-- 注入数据库用户名 -->
         <property name="username" value="learnSpringUser"/>
-        <!-- 注入数据库密码 -->
         <property name="password" value="learnSpringPassword"/>
     </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置事务通知 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="transfer" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置事务切入点 -->
+    <aop:config>
+        <aop:pointcut id="pt1" expression="execution(* com.peterjxl.service.impl.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pt1"/>
+    </aop:config>
 </beans>
