@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * 账户的持久层实现类
  */
-@Repository("accountDao")
 public class AccountDaoImpl implements IAccountDao {
 
     private QueryRunner runner;

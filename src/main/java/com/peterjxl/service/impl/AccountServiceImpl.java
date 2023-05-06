@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
     private IAccountDao accountDao;
